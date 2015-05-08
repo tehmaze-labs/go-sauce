@@ -1,3 +1,4 @@
+// SAUCE (Standard Architecture for Universal Comment Extensions) parser.
 package sauce
 
 import (
@@ -119,6 +120,7 @@ var (
 	}
 )
 
+// SAUCE (Standard Architecture for Universal Comment Extensions) record.
 type SAUCE struct {
 	ID       [5]byte
 	Version  [2]byte
@@ -135,6 +137,7 @@ type SAUCE struct {
 	TInfos   [22]byte
 }
 
+// New creates an empty SAUCE record.
 func New() *SAUCE {
 	return &SAUCE{
 		ID:      SAUCEID,
@@ -142,6 +145,7 @@ func New() *SAUCE {
 	}
 }
 
+// Parse SAUCE record from a file.
 func Parse(filename string) (r *SAUCE, err error) {
 	var f *os.File
 	var i os.FileInfo
@@ -203,6 +207,7 @@ func (r *SAUCE) parseDate(s string) time.Time {
 	return time.Date(y, time.Month(m), d, 0, 0, 0, 0, time.UTC)
 }
 
+// Dump the contents of the SAUCE record to stdout.
 func (r *SAUCE) Dump() {
 	fmt.Printf("id......: %s\n", string(r.ID[:]))
 	fmt.Printf("version.: %d%d\n", r.Version[0], r.Version[1])
@@ -236,10 +241,12 @@ func (r *SAUCE) Dump() {
 	}
 }
 
+// DataTypeString returns the DataType as string.
 func (r *SAUCE) DataTypeString() string {
 	return SAUCEDataType[r.DataType]
 }
 
+// FileTypeString returns the FileType as string.
 func (r *SAUCE) FileTypeString() string {
 	return SAUCEFileType[r.DataType][r.FileType]
 }
